@@ -1,15 +1,17 @@
-# Remix Indie Stack
+# Remix AI Chat Stack
 
 ![The Remix Indie Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
 ```sh
-npx create-remix@latest --template remix-run/indie-stack
+npx create-remix@latest --template https://github.com/gregermendle/remix-ai-chat-stack
 ```
 
 ## What's in the stack
 
+- AI Chat with [LangChainJS](https://js.langchain.com/)
+- Streamed chat response with [Remix-Utils](https://github.com/sergiodxa/remix-utils)
 - [Fly app deployment](https://fly.io) with [Docker](https://www.docker.com/)
 - Production-ready [SQLite Database](https://sqlite.org)
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)

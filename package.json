@@ -1,5 +1,5 @@
 {
-  "name": "indie-stack-template",
+  "name": "remix-ai-chat-stack-template",
   "private": true,
   "sideEffects": false,
   "scripts": {
@@ -26,6 +26,7 @@
     "/public/build"
   ],
   "dependencies": {
+    "@langchain/openai": "^0.0.11",
     "@prisma/client": "^4.16.2",
     "@remix-run/css-bundle": "*",
     "@remix-run/node": "*",
@@ -33,8 +34,11 @@
     "@remix-run/serve": "*",
     "bcryptjs": "^2.4.3",
     "isbot": "^3.7.0",
+    "langchain": "^0.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "remix-utils": "^7.5.0",
+    "rxjs": "^7.8.1",
     "tiny-invariant": "^1.3.1"
   },
   "devDependencies": {

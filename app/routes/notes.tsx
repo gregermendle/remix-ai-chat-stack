@@ -59,6 +59,10 @@ export default function NotesPage() {
               ))}
             </ol>
           )}
+
+          <Link to="qna" className="block p-4 text-xl text-blue-500">
+            ✨ AI Q&A
+          </Link>
         </div>
 
         <div className="flex-1 p-6">

@@ -1,5 +1,6 @@
-import type { User, Note } from "@prisma/client";
+import type { Note, User } from "@prisma/client";
 
+import { addDocument, removeDocument } from "~/chat.server";
 import { prisma } from "~/db.server";
 
 export function getNote({
@@ -22,14 +23,14 @@ export function getNoteListItems({ userId }: { userId: User["id"] }) {
   });
 }
 
-export function createNote({
+export async function createNote({
   body,
   title,
   userId,
 }: Pick<Note, "body" | "title"> & {
   userId: User["id"];
 }) {
-  return prisma.note.create({
+  const note = await prisma.note.create({
     data: {
       title,
       body,
@@ -40,13 +41,25 @@ export function createNote({
       },
     },
   });
+
+  await addDocument(note);
+  return note;
 }
 
 export function deleteNote({
   id,
   userId,
 }: Pick<Note, "id"> & { userId: User["id"] }) {
-  return prisma.note.deleteMany({
-    where: { id, userId },
+  return Promise.all([
+    prisma.note.deleteMany({
+      where: { id, userId },
+    }),
+    removeDocument(id),
+  ]);
+}
+
+export function getAllNotes() {
+  return prisma.note.findMany({
+    select: { id: true, body: true, title: true, userId: true },
   });
 }
