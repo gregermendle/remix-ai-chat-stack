@@ -124,11 +124,11 @@ export default function NoteDetailsPage() {
           <p className="rounded-md bg-yellow-100 whitespace-pre-wrap px-5 py-2 border border-yellow-500">
             ✨: {bot.response}
             {bot.isResponding ? (
-              <div className="inline-flex gap-0.5 items-center">
+              <span className="inline-flex gap-0.5 items-center">
                 <span className="w-2 h-2 rounded-full bg-yellow-700 animate-pulse" />
                 <span className="w-2 h-2 rounded-full bg-yellow-700 animate-pulse delay-75" />
                 <span className="w-2 h-2 rounded-full bg-yellow-700 animate-pulse delay-150" />
-              </div>
+              </span>
             ) : null}
           </p>
         </div>
@@ -170,7 +170,7 @@ export default function NoteDetailsPage() {
         <>
           <h3>Related Notes</h3>
           <hr className="my-4" />
-          <ol>
+          <ol className="space-y-2">
             {actionData.related.map((note) => (
               <li key={note.id}>
                 <Link

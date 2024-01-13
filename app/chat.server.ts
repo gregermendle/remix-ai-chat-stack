@@ -17,7 +17,6 @@ import { Subject } from "rxjs";
 import invariant from "tiny-invariant";
 
 import { getAllNotes } from "~/models/note.server";
-import { singleton } from "~/singleton.server";
 
 invariant(
   typeof process.env.OPEN_AI_KEY === "string",
@@ -45,7 +44,7 @@ const createDocument = ({
   metadata: { id, title, userId },
 });
 
-const vectorStore = singleton("vectorStore", async () => {
+const createVectorStore = async () => {
   const notes = await getAllNotes();
   const splitDocs = await textSplitter.splitDocuments(
     notes.map(createDocument),
@@ -63,12 +62,14 @@ const vectorStore = singleton("vectorStore", async () => {
   //
   console.log("🤘 Creating embeddings...");
   return MemoryVectorStore.fromDocuments(splitDocs, embeddings);
-});
+};
+
+const _vectorStore = createVectorStore();
 
 async function addDocument(
   note: Pick<Note, "id" | "body" | "title" | "userId">,
 ) {
-  const store = await vectorStore;
+  const store = await _vectorStore;
   const splitDocs = await textSplitter.splitDocuments([createDocument(note)]);
 
   console.log("✨ Adding document to index.");
@@ -76,7 +77,7 @@ async function addDocument(
 }
 
 async function removeDocument(id: Note["id"]) {
-  const store = await vectorStore;
+  const store = await _vectorStore;
 
   console.log("❌ Removing document from index.");
   store.memoryVectors = store.memoryVectors.filter(
@@ -96,10 +97,10 @@ const messages = [
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
 
-const chat$ = singleton("chat$", () => new Subject<ChatResponse>());
+const chat$ = new Subject<ChatResponse>()
 
 async function askQuestion({ question, userId }: ChatRequest) {
-  const store = await vectorStore;
+  const store = await _vectorStore;
   const sources = await store.similaritySearch(
     question,
     5,
@@ -192,7 +193,6 @@ interface ChatRequest {
 export {
   askQuestion,
   chat$,
-  vectorStore,
   addDocument,
   removeDocument,
   type ChatRequest,

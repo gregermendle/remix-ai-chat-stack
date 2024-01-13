@@ -8,6 +8,7 @@ import {
 } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
+import { removeDocument } from "~/chat.server";
 import { deleteNote, getNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 
@@ -27,6 +28,7 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   invariant(params.noteId, "noteId not found");
 
   await deleteNote({ id: params.noteId, userId });
+  await removeDocument(params.noteId);
 
   return redirect("/notes");
 };
