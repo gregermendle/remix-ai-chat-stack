@@ -166,7 +166,7 @@ export default function NoteDetailsPage() {
           </button>
         </div>
       </Form>
-      {actionData?.related ? (
+      {actionData?.related && actionData.related.length > 0 ? (
         <>
           <h3>Related Notes</h3>
           <hr className="my-4" />
