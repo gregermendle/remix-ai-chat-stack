@@ -39,13 +39,14 @@ module.exports = {
         react: {
           version: "detect",
         },
-        formComponents: ["Form"],
+        formComponents: ["Form", "Textarea", "Input", "Checkbox", "Button"],
         linkComponents: [
           { name: "Link", linkAttribute: "to" },
           { name: "NavLink", linkAttribute: "to" },
         ],
       },
       rules: {
+        "react/prop-types": ["off"],
         "react/jsx-no-leaked-render": [
           "warn",
           { validStrategies: ["ternary"] },
@@ -127,7 +128,7 @@ module.exports = {
 
     // Node
     {
-      files: [".eslintrc.js", "mocks/**/*.js"],
+      files: [".eslintrc.cjs", "mocks/**/*.js"],
       env: {
         node: true,
       },

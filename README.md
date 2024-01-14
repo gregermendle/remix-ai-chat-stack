@@ -1,6 +1,6 @@
 # Remix AI Chat Stack
 
-![The Remix Indie Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)
+![The Remix AI Chat Stack](https://storage.googleapis.com/rvsn-images/remix-ai-stack.png)
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
@@ -11,7 +11,8 @@ npx create-remix@latest --template https://github.com/gregermendle/remix-ai-chat
 ## What's in the stack
 
 - AI Chat with [LangChainJS](https://js.langchain.com/)
-- Streamed chat response with [Remix-Utils](https://github.com/sergiodxa/remix-utils)
+- Streamed chat response with `eventSource` from [Remix-Utils](https://github.com/sergiodxa/remix-utils)
+- Components from [ShadcnUI](https://ui.shadcn.com/)
 - [Fly app deployment](https://fly.io) with [Docker](https://www.docker.com/)
 - Production-ready [SQLite Database](https://sqlite.org)
 - Healthcheck endpoint for [Fly backups region fallbacks](https://fly.io/docs/reference/configuration/#services-http_checks)

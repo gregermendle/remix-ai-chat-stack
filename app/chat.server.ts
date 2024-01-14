@@ -5,9 +5,7 @@ import {
   HumanMessagePromptTemplate,
   SystemMessagePromptTemplate,
 } from "@langchain/core/prompts";
-import {
-  RunnableSequence,
-} from "@langchain/core/runnables";
+import { RunnableSequence } from "@langchain/core/runnables";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { Note, User } from "@prisma/client";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
@@ -98,7 +96,7 @@ const messages = [
 
 const prompt = ChatPromptTemplate.fromMessages(messages);
 
-const chat$ = new Subject<ChatResponse>()
+const chat$ = new Subject<ChatResponse>();
 
 async function askQuestion({ question, userId }: ChatRequest) {
   const store = await _vectorStore;

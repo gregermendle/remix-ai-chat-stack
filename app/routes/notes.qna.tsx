@@ -1,3 +1,4 @@
+import { MagicWandIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
@@ -9,6 +10,8 @@ import {
 } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { askQuestion, type ChatResponse } from "~/chat.server";
 import { requireUserId } from "~/session.server";
 
@@ -113,21 +116,21 @@ export default function NoteDetailsPage() {
   }, []);
 
   return (
-    <div className="max-h-screen">
+    <div>
       <h3 className="text-2xl font-bold">Chat</h3>
       <p className="py-6">Start chatting to ask questions about your notes.</p>
       {typeof actionData !== "undefined" ? (
         <div className="flex flex-col gap-2">
-          <p className="font-semibold px-5 py-2 bg-gray-50 border rounded-md">
-            {actionData?.question}
+          <p className="font-semibold px-5 py-2 bg-muted/30 text-muted-foreground border rounded-md">
+            You: {actionData?.question}
           </p>
-          <p className="rounded-md bg-yellow-100 whitespace-pre-wrap px-5 py-2 border border-yellow-500">
-            ✨: {bot.response}
+          <p className="rounded-md bg-emerald-800/60 whitespace-pre-wrap px-5 py-2 border border-emerald-600">
+            <MagicWandIcon className="inline-block" /> {bot.response}
             {bot.isResponding ? (
               <span className="inline-flex gap-0.5 items-center">
-                <span className="w-2 h-2 rounded-full bg-yellow-700 animate-pulse" />
-                <span className="w-2 h-2 rounded-full bg-yellow-700 animate-pulse delay-75" />
-                <span className="w-2 h-2 rounded-full bg-yellow-700 animate-pulse delay-150" />
+                <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse delay-75" />
+                <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse delay-150" />
               </span>
             ) : null}
           </p>
@@ -136,14 +139,15 @@ export default function NoteDetailsPage() {
       <hr className="my-4" />
       <Form ref={formRef} method="post" className="flex flex-col gap-1">
         <div>
-          <label className="flex w-full flex-col gap-1">
-            <span>Question: </span>
-            <textarea
+          <label htmlFor="question" className="flex w-full flex-col gap-1">
+            <span>Question:</span>
+            <Textarea
               ref={questionRef}
               name="question"
+              id="question"
+              disabled={bot.isResponding}
               rows={4}
               placeholder="Ask a question..."
-              className="w-full flex-1 rounded-md border-2 border-blue-500 px-3 py-2 text-lg leading-6"
               aria-invalid={actionData?.errors?.question ? true : undefined}
               aria-errormessage={
                 actionData?.errors?.question ? "question-error" : undefined
@@ -158,12 +162,9 @@ export default function NoteDetailsPage() {
         </div>
 
         <div className="text-right">
-          <button
-            type="submit"
-            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
-          >
+          <Button type="submit" disabled={bot.isResponding}>
             Send
-          </button>
+          </Button>
         </div>
       </Form>
       {actionData?.related && actionData.related.length > 0 ? (
@@ -174,10 +175,10 @@ export default function NoteDetailsPage() {
             {actionData.related.map((note) => (
               <li key={note.id}>
                 <Link
-                  className="block bg-gray-50 border rounded-md p-4 text-xl"
+                  className="block text-muted-foreground border rounded-md px-3 py-2 text-md"
                   to={`/notes/${note.id}`}
                 >
-                  📝 {note.title}
+                  <Pencil1Icon className="inline-block" /> {note.title}
                 </Link>
               </li>
             ))}

@@ -3,6 +3,9 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { addDocument } from "~/chat.server";
 import { createNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
@@ -58,12 +61,12 @@ export default function NewNotePage() {
       }}
     >
       <div>
-        <label className="flex w-full flex-col gap-1">
-          <span>Title: </span>
-          <input
+        <label htmlFor="title" className="flex w-full flex-col gap-1">
+          <span>Title:</span>
+          <Input
             ref={titleRef}
             name="title"
-            className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
+            id="title"
             aria-invalid={actionData?.errors?.title ? true : undefined}
             aria-errormessage={
               actionData?.errors?.title ? "title-error" : undefined
@@ -78,13 +81,13 @@ export default function NewNotePage() {
       </div>
 
       <div>
-        <label className="flex w-full flex-col gap-1">
-          <span>Body: </span>
-          <textarea
+        <label htmlFor="body" className="flex w-full flex-col gap-1">
+          <span>Body:</span>
+          <Textarea
             ref={bodyRef}
             name="body"
+            id="body"
             rows={8}
-            className="w-full flex-1 rounded-md border-2 border-blue-500 px-3 py-2 text-lg leading-6"
             aria-invalid={actionData?.errors?.body ? true : undefined}
             aria-errormessage={
               actionData?.errors?.body ? "body-error" : undefined
@@ -99,12 +102,7 @@ export default function NewNotePage() {
       </div>
 
       <div className="text-right">
-        <button
-          type="submit"
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
-        >
-          Save
-        </button>
+        <Button type="submit">Save</Button>
       </div>
     </Form>
   );

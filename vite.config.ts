@@ -10,9 +10,12 @@ export default defineConfig({
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "./app"),
+      "@": path.resolve(__dirname, "./@"),
     },
   },
-  plugins: [remix({
-    ignoredRouteFiles: ["**/.*", "**/*.test.{ts,tsx}"],
-  })],
+  plugins: [
+    remix({
+      ignoredRouteFiles: ["**/.*", "**/*.test.{ts,tsx}"],
+    }),
+  ],
 });

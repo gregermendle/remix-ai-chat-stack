@@ -1,7 +1,10 @@
+import { MagicWandIcon, Pencil1Icon } from "@radix-ui/react-icons";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { getNoteListItems } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
@@ -17,55 +20,60 @@ export default function NotesPage() {
   const user = useUser();
 
   return (
-    <div className="flex h-full min-h-screen flex-col">
-      <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
-        <h1 className="text-3xl font-bold">
+    <div className="grid grid-cols-1 grid-rows-[auto,1fr] min-h-screen">
+      <header className="sticky top-0 flex h-12 items-center justify-between bg-background/90 border-b backdrop-blur-md px-4">
+        <h1 className="text-lg font-bold">
           <Link to=".">Notes</Link>
         </h1>
         <p>{user.email}</p>
         <Form action="/logout" method="post">
-          <button
-            type="submit"
-            className="rounded bg-slate-600 px-4 py-2 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
-          >
+          <Button variant="outline" size="sm" type="submit">
             Logout
-          </button>
+          </Button>
         </Form>
       </header>
-
-      <main className="flex h-full bg-white">
-        <div className="h-full w-80 border-r bg-gray-50">
-          <Link to="new" className="block p-4 text-xl text-blue-500">
-            + New Note
-          </Link>
-
-          <hr />
-
+      <main className="grid grid-cols-[auto,1fr] grid-rows-1">
+        <div className="w-80 border-r bg-muted/10">
+          <div className="px-4 py-4">
+            <Button
+              variant="default"
+              className="[&.active]:bg-foreground/10 w-full"
+              asChild
+            >
+              <Link to="new">+ New Note</Link>
+            </Button>
+          </div>
+          <Separator />
           {data.noteListItems.length === 0 ? (
             <p className="p-4">No notes yet</p>
           ) : (
-            <ol>
+            <ol className="divide-y">
+              <Button
+                variant="ghost"
+                className="[&.active]:bg-foreground/10 rounded-none w-full justify-start text-emerald-200"
+                asChild
+              >
+                <NavLink to="qna">
+                  <MagicWandIcon className="inline-block mr-2" /> AI Q&A
+                </NavLink>
+              </Button>
               {data.noteListItems.map((note) => (
                 <li key={note.id}>
-                  <NavLink
-                    className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
-                    to={note.id}
+                  <Button
+                    variant="ghost"
+                    className="[&.active]:bg-foreground/10 rounded-none w-full justify-start"
+                    asChild
                   >
-                    📝 {note.title}
-                  </NavLink>
+                    <NavLink to={note.id}>
+                      <Pencil1Icon className="inline-block mr-2" /> {note.title}
+                    </NavLink>
+                  </Button>
                 </li>
               ))}
             </ol>
           )}
-
-          <Link to="qna" className="block p-4 text-xl text-blue-500">
-            ✨ AI Q&A
-          </Link>
         </div>
-
-        <div className="flex-1 p-6">
+        <div className="p-6">
           <Outlet />
         </div>
       </main>
