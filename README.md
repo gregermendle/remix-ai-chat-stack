@@ -10,7 +10,8 @@ npx create-remix@latest --template https://github.com/gregermendle/remix-ai-chat
 
 ## What's in the stack
 
-- AI Chat with [LangChainJS](https://js.langchain.com/)
+- AI Chat with [LangChainJS](https://js.langchain.com/) and [OpenAI](https://openai.com)
+- Vector storage with [HNSWLib](https://github.com/yoshoku/hnswlib-node)
 - Streamed chat response with `eventSource` from [Remix-Utils](https://github.com/sergiodxa/remix-utils)
 - Components from [ShadcnUI](https://ui.shadcn.com/)
 - [Fly app deployment](https://fly.io) with [Docker](https://www.docker.com/)
@@ -34,9 +35,6 @@ Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --
 Click this button to create a [Gitpod](https://gitpod.io) workspace with the project set up and Fly pre-installed
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gregermendle/remix-ai-chat-stack/tree/main)
-
-> [!CAUTION]
-> This template is an example of how you can use Langchain and OpenAI in a Remix App. Embeddings are stored in an in memory vector database and are not cached or saved between server restarts. Be careful as repeatedly running this embedding code with a large number of documents may incur charges on your OpenAI account.
 
 ## Development
 
@@ -70,11 +68,12 @@ The database seed script creates a new user with some data you can use to get st
 
 ### Relevant code:
 
-This is a pretty simple note-taking app, but it's a good example of how you can build a full stack app with Prisma and Remix. The main functionality is creating users, logging in and out, and creating and deleting notes.
+This is a pretty simple note-taking app, but it's a good example of how you can build a full stack app with Langchain, Prisma, and Remix. The main functionality is creating users, logging in and out, creating and deleting notes, and chatting with GPT about your notes.
 
 - creating users, and logging in and out [./app/models/user.server.ts](./app/models/user.server.ts)
 - user sessions, and verifying them [./app/session.server.ts](./app/session.server.ts)
 - creating, and deleting notes [./app/models/note.server.ts](./app/models/note.server.ts)
+- Langchain, OpenAI, and HNSW setup [./app/chat.server.ts](./app/chat.server.ts)
 
 ## Deployment
 
@@ -127,11 +126,11 @@ Prior to your first deployment, you'll need to do a few things:
 - Add a `OPEN_AI_KEY` to your fly app secrets, you can do this by running the following commands:
 
   ```sh
-  fly secrets set SESSION_SECRET=<your-open-ai-key> --app ai-stack-template
-  fly secrets set SESSION_SECRET=<your-open-ai-key> --app ai-stack-template-staging
+  fly secrets set OPEN_AI_KEY=<your-open-ai-key> --app ai-stack-template
+  fly secrets set OPEN_AI_KEY=<your-open-ai-key> --app ai-stack-template-staging
   ```
 
-- Create a persistent volume for the sqlite database for both your staging and production environments. Run the following:
+- Create a persistent volume for the sqlite database and HNSW index for both your staging and production environments. Run the following:
 
   ```sh
   fly volumes create data --size 1 --app ai-stack-template

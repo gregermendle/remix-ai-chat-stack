@@ -16,3 +16,8 @@ node_modules
 /cypress/videos
 /prisma/data.db
 /prisma/data.db-journal
+
+/hnsw/args.json
+/hnsw/docstore.json
+/hnsw/hnswlib.index
+

@@ -41,8 +41,12 @@ RUN npm run build
 FROM base
 
 ENV DATABASE_URL=file:/data/sqlite.db
+ENV HNSW_INDEX_PATH=/data/hnsw
 ENV PORT="8080"
 ENV NODE_ENV="production"
+
+# create HNSW index path if it doesn't already exist
+RUN mkdir -p $HNSW_INDEX_PATH
 
 # add shortcut for connecting to database CLI
 RUN echo "#!/bin/sh\nset -x\nsqlite3 \$DATABASE_URL" > /usr/local/bin/database-cli && chmod +x /usr/local/bin/database-cli

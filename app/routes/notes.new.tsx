@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { addDocument } from "~/chat.server";
 import { createNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 
@@ -32,8 +31,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   const note = await createNote({ body, title, userId });
-  await addDocument(note);
-
   return redirect(`/notes/${note.id}`);
 };
 
