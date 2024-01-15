@@ -1,6 +1,6 @@
 # Remix AI Chat Stack
 
-![The Remix AI Chat Stack](https://github.com/gregermendle/remix-ai-chat-stack/assets/9381099/6e793a3c-c8b0-4a8a-bf44-5cb6d42371a7)
+[The Remix AI Chat Stack](https://github.com/gregermendle/remix-ai-chat-stack/assets/9381099/38ade167-5188-4017-b76e-7f38cf322d23)
 
 Learn more about [Remix Stacks](https://remix.run/stacks).
 
