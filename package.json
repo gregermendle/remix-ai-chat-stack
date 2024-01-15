@@ -14,7 +14,7 @@
     "start": "remix-serve ./build/server/index.js",
     "start:mocks": "binode --require ./mocks/index.cjs -- @remix-run/serve:remix-serve ./build/server/index.js",
     "test": "vitest",
-    "test:e2e:dev": "start-server-and-test dev http://localhost:3000 \"npx cypress open\"",
+    "test:e2e:dev": "start-server-and-test dev http://localhost:5173 \"npx cypress open\"",
     "pretest:e2e:run": "npm run build",
     "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 \"npx cypress run\"",
     "typecheck": "tsc && tsc -p cypress",
