@@ -8,6 +8,9 @@ Learn more about [Remix Stacks](https://remix.run/stacks).
 npx create-remix@latest --template https://github.com/gregermendle/remix-ai-chat-stack
 ```
 
+> [!NOTE]
+> This template uses Vite which is not yet stable. Documentation on Remix and Vite can be found [here](https://remix.run/docs/en/main/future/vite)
+
 ## What's in the stack
 
 - AI Chat with [LangChainJS](https://js.langchain.com/) and [OpenAI](https://openai.com)
